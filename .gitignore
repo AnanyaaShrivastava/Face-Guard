@@ -5,3 +5,8 @@ __pycache__/
 data/
 *.pt
 *.pth
+*.h5
+*.jpg
+*.png
+.ipynb_checkpoints/
+.ipynb
