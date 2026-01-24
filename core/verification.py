@@ -1,17 +1,29 @@
 from deepface import DeepFace
 
-def verify_faces(id_img_path, selfie_img_path):
-    result = DeepFace.verify(
-        img1_path=id_img_path,
-        img2_path=selfie_img_path,
-        model_name="ArcFace",
-        detector_backend="retinaface",
-        enforce_detection=True
-    )
+MODEL_NAME = "ArcFace"
+DETECTOR = "mtcnn"
+THRESHOLD = 0.6
 
-    return {
-        "verified": result["verified"],
-        "distance": result["distance"],
-        "threshold": result["threshold"],
-        "model": "ArcFace"
-    }
+def verify_faces(id_path, selfie_path):
+    try:
+        result = DeepFace.verify(
+            img1_path=id_path,
+            img2_path=selfie_path,
+            model_name=MODEL_NAME,
+            detector_backend=DETECTOR,
+            enforce_detection=False   # IMPORTANT
+        )
+
+        return {
+            "verified": bool(result["verified"]),
+            "distance": float(result["distance"]),
+            "threshold": float(result["threshold"])
+        }
+
+    except Exception as e:
+        return {
+            "verified": False,
+            "distance": None,
+            "threshold": THRESHOLD,
+            "error": str(e)
+        }
