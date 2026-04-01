@@ -1,7 +1,6 @@
 import streamlit as st
 import tempfile
-import cv2
-import numpy as np
+from PIL import Image, ImageStat
 from core.verification import verify_faces
 
 st.set_page_config(
@@ -247,8 +246,8 @@ with left_col:
             with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as f:
                 f.write(cam.read())
                 st.session_state.selfie_path = f.name
-            img_chk = cv2.imread(st.session_state.selfie_path, cv2.IMREAD_GRAYSCALE)
-            if img_chk is None or np.var(img_chk) < 20:
+            img_chk = ImageStat.Stat(Image.open(st.session_state.selfie_path).convert("L"))
+            if img_chk.var[0] < 20:
                 st.error("[ ERR ] Image quality too low. Retake in better lighting.")
                 st.session_state.selfie_path = None
 
