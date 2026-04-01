@@ -1,4 +1,4 @@
-# 🛡️ Dwarapala Yantra — Identity Verification
+# 🛡️ FACE GUARD — Identity Verification
 
 AI-powered face verification that compares an ID photo with a live selfie using **ArcFace** deep learning model via DeepFace.
 
